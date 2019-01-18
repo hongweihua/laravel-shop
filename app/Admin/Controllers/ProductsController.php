@@ -53,8 +53,8 @@ class ProductsController extends Controller
     public function edit($id, Content $content)
     {
         return $content
-            ->header('Edit')
-            ->description('description')
+            ->header('编辑商品')
+//            ->description('description')
             ->body($this->form()->edit($id));
     }
 
