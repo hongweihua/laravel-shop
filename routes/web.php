@@ -31,6 +31,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::delete('products/{product}/favorite', 'ProductsController@disfavor')->name('products.disfavor');
 
         Route::post('cart', 'CartController@add')->name('cart.add');
+        Route::get('cart', 'CartController@index')->name('cart.index');
+        Route::delete('cart/{sku}', 'CartController@remove')->name('cart.remove');
+
 
 
 //        Route::get('/test', function (){
@@ -38,8 +41,7 @@ Route::group(['middleware' => 'auth'], function () {
 //        });
     });
 
-    Route::get('products/{product}', 'ProductsController@show')->name('products.show');
-
 });
+Route::get('products/{product}', 'ProductsController@show')->name('products.show');
 
 Auth::routes();
