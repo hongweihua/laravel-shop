@@ -37,6 +37,12 @@ return [
     'logo-mini' => '<b>LS</b>',
 
     /*
+     * Laravel-Admin 启动文件路径
+     */
+    'bootstrap' => app_path('Admin/bootstrap.php'),
+
+
+    /*
     |--------------------------------------------------------------------------
     | Laravel-admin route settings
     |--------------------------------------------------------------------------
@@ -48,7 +54,8 @@ return [
     */
     'route' => [
 
-        'prefix' => 'admin',
+        // 路由前缀
+        'prefix' => env('ADMIN_ROUTE_PREFIX', 'admin'),
 
         'namespace' => 'App\\Admin\\Controllers',
 
@@ -85,7 +92,7 @@ return [
     | If your page is going to be accessed via https, set it to `true`.
     |
     */
-    'secure' => false,
+    'secure' => env('ADMIN_HTTPS', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -97,6 +104,8 @@ return [
     |
     */
     'auth' => [
+        'controller' => App\Admin\Controllers\AuthController::class,
+
         'guards' => [
             'admin' => [
                 'driver'   => 'session',
@@ -110,6 +119,18 @@ return [
                 'model'  => Encore\Admin\Auth\Database\Administrator::class,
             ],
         ],
+
+        // 是否展示 保持登录 选项
+        'remember' => true,
+
+        // 登录页面 URL
+        'redirect_to' => 'auth/login',
+
+        // 无需用户认证即可访问的地址
+        'excepts' => [
+            'auth/login',
+            'auth/logout',
+        ]
     ],
 
     /*
@@ -180,13 +201,15 @@ return [
     */
     'operation_log' => [
 
+        /*
+          * 只记录以下类型的请求
+          */
+        'allowed_methods' => ['GET', 'HEAD', 'POST', 'PUT', 'DELETE', 'CONNECT', 'OPTIONS', 'TRACE', 'PATCH'],
+
         'enable' => true,
 
         /*
-         * Routes that will not log to database.
-         *
-         * All method to path like: admin/auth/logs
-         * or specific method to path like: get:admin/auth/logs.
+         * 不记操作日志的路由
          */
         'except' => [
             'admin/auth/logs*',
@@ -233,16 +256,35 @@ return [
     */
     'login_background_image' => '',
 
-    /*
-    |--------------------------------------------------------------------------
-    | Version
-    |--------------------------------------------------------------------------
-    |
-    | This version number set will appear in the page footer.
-    |
-    */
-    'version' => '1.5.x-dev',
 
+    /*
+    * 显示版本
+    */
+    'show_version' => true,
+
+
+    /*
+    * 显示环境
+    */
+    'show_environment' => true,
+
+
+    /*
+    * 菜单绑定权限
+    */
+    'menu_bind_permission' => true,
+
+    /*
+    * 默认启用面包屑
+    */
+    'enable_default_breadcrumb' => true,
+
+
+    /*
+    * 扩展所在的目录.
+    */
+
+    'extension_dir' => app_path('Admin/Extensions'),
     /*
     |--------------------------------------------------------------------------
     | Settings for extensions.
