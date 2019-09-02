@@ -31,9 +31,7 @@ class CloseOrder implements ShouldQueue
     }
 
     /**
-     * Execute the job.
-     *
-     * @return void
+     * @throws \Throwable
      */
     public function handle()
     {
