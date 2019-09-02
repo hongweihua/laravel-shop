@@ -54,7 +54,7 @@ class ProductsController extends Controller
 
         if ($user = $request->user()) {
             // 从当前用户已收藏的商品中搜索 id 为当前商品 id 的商品
-            // booleval() 函数用于把值转为布尔值
+            // boolval() 函数用于把值转为布尔值
             $favored = boolval($user->favoriteProducts()->find($product->id));
         }
 
